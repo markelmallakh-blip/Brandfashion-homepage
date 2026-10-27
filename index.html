@@ -25,7 +25,7 @@
   --tile: #f5f6fa;
   --sale: #e5322d;
   --save: #138a4a;
-  --accent: var(--navy);
+  --accent: #111318; /* primary action colour on light backgrounds */
   --accent-ink: #fff;
   --hot: #ff5a1f;
   --hot-2: #ff8a00;
@@ -562,30 +562,33 @@ main { padding-bottom: 40px; }
 .brand-banner .bp b s { color: var(--ink-3); font-weight: 500; margin-left: 6px; font-size: 11.5px; }
 .brand-banner .bp .b-off { position: absolute; top: 10px; left: 10px; }
 
-/* ---------- Today's offer ---------- */
+/* ---------- Today's offer: bright, light carousel ---------- */
 .today {
-  border-radius: 28px; padding: 6px; position: relative;
-  background: linear-gradient(120deg, var(--gold), #f3d78f, #a07a2a, var(--gold));
-  background-size: 300% 300%; animation: sheen 8s ease infinite;
+  border-radius: 26px; padding: 22px 22px 8px; position: relative; overflow: hidden; border: 1px solid #cdeefa;
+  background:
+    radial-gradient(520px 220px at 0% 0%, #c9f1ff 0%, transparent 70%),
+    radial-gradient(520px 240px at 100% 100%, #d9fbe6 0%, transparent 70%),
+    radial-gradient(360px 160px at 70% 0%, #fff6c9 0%, transparent 70%),
+    #f2fbff;
 }
-.today-inner { background: #fffdf7; border-radius: 23px; display: grid; grid-template-columns: 300px 1fr; overflow: hidden; }
-.today-side {
-  padding: 30px 26px; color: #fff; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden;
-  background: radial-gradient(140% 100% at 0% 0%, #2a3d7c, #0f1a3a 70%);
+.today .sec-head { align-items: center; }
+.today-title { display: flex; flex-direction: column; gap: 4px; }
+.today-title h2 { margin: 0; }
+.today-tag {
+  display: inline-flex; align-items: center; gap: 6px; width: max-content; padding: 4px 10px; border-radius: 999px;
+  background: #0a6ad6; color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
 }
-.today-side::after {
-  content: ""; position: absolute; width: 260px; height: 260px; right: -110px; bottom: -110px; border-radius: 50%;
-  border: 40px solid rgba(200, 162, 74, .18);
+.today-tag .ico { width: 13px; height: 13px; }
+.today .countdown { margin-left: 18px; }
+.today .countdown .u { background: #111318; }
+.today .pc { border-color: #dcf0f8; }
+/* the one CTA style on light backgrounds */
+.btn-dark {
+  display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 12px;
+  background: #111318; color: #fff; font-weight: 700; font-size: 13.5px; white-space: nowrap; transition: transform .2s, background .2s;
 }
-.today-side small { color: var(--gold); font-weight: 800; letter-spacing: .12em; font-size: 11.5px; text-transform: uppercase; }
-.today-side h2 { margin: 0; font-size: 34px; line-height: 1.02; letter-spacing: -.03em; }
-.today-side p { margin: 0; opacity: .75; font-size: 14px; line-height: 1.5; }
-.today-side .countdown { color: rgba(255, 255, 255, .7); }
-.today-side .countdown .u { background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .15); width: 54px; height: 58px; font-size: 22px; }
-.today-side .countdown .u small { bottom: 5px; font-size: 9px; }
-.today-side .cta { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 18px; border-radius: 12px; background: var(--gold); color: #1a1405; font-weight: 800; width: max-content; position: relative; z-index: 2; }
-.today-grid { padding: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.today-grid .pc { box-shadow: none; }
+.btn-dark:hover { background: #2a2d36; transform: translateY(-1px); }
+.btn-dark .ico { width: 16px; height: 16px; }
 
 /* trust */
 .trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -656,7 +659,14 @@ main { padding-bottom: 40px; }
 .hot-hero .stat { display: flex; gap: 28px; margin-top: 18px; }
 .hot-hero .stat b { font-size: 26px; display: block; letter-spacing: -.02em; }
 .hot-hero .stat small { opacity: .85; font-size: 12.5px; }
-.hot-hero .bigflame { position: absolute; right: 26%; bottom: -40px; width: 220px; height: 220px; opacity: .18; color: #fff; animation: flicker 1.4s infinite alternate; }
+/* layered flame: red outer tongue, amber body, white-hot core, each flickering at its own pace */
+.hot-hero .flame-art { position: absolute; right: 25%; bottom: -14px; width: 168px; height: 218px; pointer-events: none; filter: drop-shadow(0 0 28px rgba(255, 214, 120, .55)); }
+.flame-art path { transform-box: fill-box; transform-origin: 50% 100%; }
+.flame-art .f1 { animation: f-sway 2.6s ease-in-out infinite alternate; }
+.flame-art .f2 { animation: f-sway 1.8s ease-in-out infinite alternate-reverse; }
+.flame-art .f3 { animation: f-sway 1.2s ease-in-out infinite alternate; }
+.flame-art .f-glow { transform-box: fill-box; transform-origin: 50% 50%; animation: f-glow 1.6s ease-in-out infinite alternate; }
+.hot-hero .countdown .sep { color: #fff; }
 .ember { position: absolute; bottom: -10px; width: 6px; height: 6px; border-radius: 50%; background: #ffe08a; opacity: 0; animation: ember 4s linear infinite; }
 .hot-bar { display: flex; align-items: center; gap: 12px; margin: 22px 0 14px; flex-wrap: wrap; }
 .hot-bar .count { font-size: 13.5px; color: var(--ink-2); }
@@ -754,6 +764,8 @@ main { padding-bottom: 40px; }
 @keyframes zap { 0%, 88%, 100% { transform: rotate(0); } 92% { transform: rotate(-12deg) scale(1.1); } 96% { transform: rotate(10deg) scale(1.1); } }
 @keyframes sheen { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 @keyframes twinkle { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
+@keyframes f-sway { 0% { transform: scale(1, 1) skewX(0); } 35% { transform: scale(1.03, 1.06) skewX(-2.5deg); } 70% { transform: scale(.98, 1.02) skewX(2deg); } 100% { transform: scale(1.02, .97) skewX(-1deg); } }
+@keyframes f-glow { from { opacity: .75; transform: scale(.96); } to { opacity: 1; transform: scale(1.06); } }
 @keyframes flicker { from { transform: scale(1) rotate(-3deg); } to { transform: scale(1.08) rotate(3deg); } }
 @keyframes burst { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes ember { 0% { opacity: 0; transform: translateY(0) scale(1); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(-220px) translateX(20px) scale(.4); } }
@@ -770,8 +782,6 @@ main { padding-bottom: 40px; }
   .hbtn .lbl { display: none; }
   .rail { grid-auto-columns: calc((100% - 4 * 14px) / 5); }
   .grid { grid-template-columns: repeat(5, 1fr); }
-  .today-grid { grid-template-columns: repeat(3, 1fr); }
-  .today-grid .pc:nth-child(n+7) { display: none; }
   .slide h1 { font-size: 42px; }
 }
 @media (max-width: 1000px) {
@@ -789,9 +799,6 @@ main { padding-bottom: 40px; }
   .fcols .about { grid-column: 1 / -1; }
   .flash-pill { display: none; }
   .trust { grid-template-columns: 1fr 1fr; }
-  .today-inner { grid-template-columns: 1fr; }
-  .today-side { flex-direction: row; flex-wrap: wrap; align-items: center; }
-  .today-side .cta { margin: 0 0 0 auto; }
 }
 @media (max-width: 760px) {
   .container { padding: 0 16px; }
@@ -830,16 +837,15 @@ main { padding-bottom: 40px; }
   .sec-head .right { margin-left: auto; }
   .flash { padding: 16px 12px 4px; border-radius: 22px; }
   .flash .sec-head .countdown { order: 3; width: 100%; }
+  .today { padding: 16px 12px 4px; border-radius: 22px; }
+  .today .countdown { order: 3; width: 100%; margin-left: 0; }
+  .today .btn-dark { height: 36px; padding: 0 12px; font-size: 12.5px; }
   .countdown .u { min-width: 34px; height: 34px; font-size: 15px; }
   .brand-banner { grid-template-columns: 1fr; background: linear-gradient(170deg, #0c1b4d 0%, #13286b 60%, #c8102e 60.2%, #c8102e 64%, #fff 64.2%); }
   .brand-banner .copy { padding: 28px 22px 10px; }
   .brand-banner h3 { font-size: 28px; }
   .brand-banner .art { height: 230px; }
   .brand-banner .bp { width: 130px; }
-  .today-grid { grid-template-columns: 1fr 1fr; padding: 12px; gap: 10px; }
-  .today-grid .pc:nth-child(n+5) { display: none; }
-  .today-side h2 { font-size: 28px; }
-  .today-side .cta { margin: 0; }
   .trust { grid-template-columns: 1fr; }
   .brands { grid-template-columns: repeat(3, 1fr); }
   .news { flex-direction: column; align-items: stretch; text-align: left; }
@@ -848,6 +854,7 @@ main { padding-bottom: 40px; }
   .fbottom .container { flex-direction: column; height: auto; padding: 16px; gap: 10px; }
   .pay { margin: 0; flex-wrap: wrap; }
   .hot-hero { flex-direction: column; align-items: flex-start; padding: 24px 20px; }
+  .hot-hero .flame-art { right: 10px; bottom: -10px; width: 104px; height: 136px; }
   .hot-hero h1 { font-size: 32px; }
   .hot-hero .right { margin-left: 0; align-items: flex-start; }
   .hot-bar select { margin-left: 0; }
@@ -1088,16 +1095,20 @@ main { padding-bottom: 40px; }
       </section>
 
       <!-- Today's offer -->
-      <section class="section today">
-        <div class="today-inner">
-          <div class="today-side">
-            <div><small>Today only</small><h2>Today's<br>Offers</h2></div>
-            <p>Hand-picked prices that reset at midnight.</p>
-            <div class="countdown" data-countdown="today"></div>
-            <a href="#" class="cta">See all offers <svg class="ico" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
+      <section class="section today" id="today">
+        <div class="sec-head">
+          <div class="today-title">
+            <span class="today-tag"><svg class="ico"><use href="#i-tag"/></svg>Today only</span>
+            <h2>Today's Offers</h2>
+            <span class="sub">Hand-picked prices that reset at midnight</span>
           </div>
-          <div class="today-grid" id="todayGrid"></div>
+          <div class="countdown" data-countdown="today"></div>
+          <div class="right">
+            <a href="#" class="btn-dark">See all offers <svg class="ico"><use href="#i-arrow"/></svg></a>
+            <div class="arrows" data-for="railToday"></div>
+          </div>
         </div>
+        <div class="rail" id="railToday"></div>
       </section>
 
       <!-- Brands -->
@@ -1120,14 +1131,24 @@ main { padding-bottom: 40px; }
   <div id="hotView">
     <div class="container">
       <section class="hot-hero" id="hotHero">
-        <svg class="bigflame"><use href="#i-flame"/></svg>
+        <svg class="flame-art" viewBox="0 0 200 260" aria-hidden="true">
+          <defs>
+            <radialGradient id="fGlow" cx="50%" cy="78%" r="50%"><stop offset="0" stop-color="#fff3b0" stop-opacity=".9"/><stop offset=".45" stop-color="#ffc14d" stop-opacity=".45"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
+            <linearGradient id="fOuter" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#d81b0b"/><stop offset=".45" stop-color="#ff4d0d"/><stop offset=".8" stop-color="#ff8a1c"/><stop offset="1" stop-color="#ffb347" stop-opacity=".85"/></linearGradient>
+            <linearGradient id="fMid" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff7a00"/><stop offset=".55" stop-color="#ffb21e"/><stop offset="1" stop-color="#ffd85a"/></linearGradient>
+            <linearGradient id="fCore" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".6" stop-color="#fff7d6"/><stop offset="1" stop-color="#fffdf2"/></linearGradient>
+          </defs>
+          <ellipse class="f-glow" cx="100" cy="200" rx="100" ry="70" fill="url(#fGlow)"/>
+          <path class="f1" fill="url(#fOuter)" d="M104 6C112 52 160 78 170 140c8 56-24 110-70 112-48 2-78-38-72-88 4-40 28-60 34-92 14 20 18 36 24 44 6-36-4-68 18-110z"/>
+          <path class="f2" fill="url(#fMid)" d="M102 70c8 34 44 58 44 102 0 42-22 64-46 64-26 0-48-22-46-54 2-26 18-38 24-58 8 14 12 22 16 26 4-24-2-48 8-80z"/>
+          <path class="f3" fill="url(#fCore)" d="M100 140c8 20 26 36 24 60-2 22-12 32-24 32-14 0-24-10-24-28 0-16 10-24 14-36 6 10 8-10 10-28z"/>
+        </svg>
         <div>
           <h1>Hot Deals 🔥</h1>
           <p>Only discounted products — the biggest savings first.</p>
           <div class="stat">
             <div><b id="hotCount">0</b><small>products on sale</small></div>
             <div><b id="hotMax">0%</b><small>max discount</small></div>
-            <div><b id="hotSave">0</b><small>EGP total savings</small></div>
           </div>
         </div>
         <div class="right">
@@ -1531,7 +1552,7 @@ function renderHome() {
     ['Sunglasses', () => where(p => p.dept === 'eyewear')],
   ]);
 
-  $('#todayGrid').innerHTML = pick([3, 22, 35, 10, 37, 18, 32, 41]).map(p => card(p)).join('');
+  fillRail($('#railToday'), pick([3, 22, 35, 10, 37, 18, 32, 41, 13, 29]));
 
   const bp = [[14, '8%', '12%', -4], [1, '38%', '30%', 3], [17, '68%', '8%', -2]];
   $('#bannerArt').innerHTML = bp.map(([id, l, t, r]) => { const p = byId[id]; return `<div class="bp" data-id="${p.id}" style="left:${l};top:${t};transform:rotate(${r}deg)"><span class="b-off">-${p.off}%</span><img src="${p.img}" alt=""><b>${fmt(p.price)} EGP<s>${fmt(p.was)}</s></b></div>`; }).join('');
@@ -1567,7 +1588,6 @@ function renderHot() {
   $('#hotGrid').innerHTML = list.map(p => card(p, p.off >= 30 ? 'flash' : '')).join('') || '<div class="recent-empty" style="grid-column:1/-1">No deals match these filters.</div>';
   $('#hotCount').textContent = list.length;
   $('#hotMax').textContent = (list.length ? Math.max(...list.map(p => p.off)) : 0) + '%';
-  $('#hotSave').textContent = fmt(list.reduce((t, p) => t + p.was - p.price, 0));
 }
 function setupHot() {
   const depts = [['all', 'All deals'], ['watches', 'Watches'], ['bags', 'Bags'], ['wallets', 'Wallets & belts'], ['perfumes', 'Fragrances'], ['eyewear', 'Eyewear'], ['electronics', 'Electronics']];
@@ -1724,7 +1744,7 @@ bindNav();
 bindSearch();
 renderSlider();
 renderHome();
-['cats', 'railFlash', 'railRecent', 'railWatches', 'railTech', 'railBags', 'railScent'].forEach(id => setupRail($('#' + id)));
+['cats', 'railFlash', 'railRecent', 'railWatches', 'railTech', 'railBags', 'railScent', 'railToday'].forEach(id => setupRail($('#' + id)));
 setupHot();
 bindGlobal();
 syncCart();
