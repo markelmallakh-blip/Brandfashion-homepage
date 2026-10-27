@@ -271,10 +271,14 @@ a { color: inherit; text-decoration: none; }
 }
 .tab .ico { width: 17px; height: 17px; opacity: .8; }
 .tab:hover, .tab.active { color: var(--ink); background: var(--tile); }
-.tab.new::after {
+.tab.new::after, .tab.sale::after {
   content: "NEW"; position: absolute; top: 0; right: 0; font-size: 8.5px; font-weight: 800; letter-spacing: .05em;
   background: #12b76a; color: #fff; padding: 1px 4px; border-radius: 4px; transform: translate(4px, -2px);
 }
+.tab.sale::after { content: "SALE"; background: var(--sale); }
+.tab.sale { color: var(--sale); }
+.tab.sale .ico { opacity: 1; }
+.sale-pill { margin-left: 8px; font-size: 9px; font-weight: 800; letter-spacing: .05em; background: var(--sale); color: #fff; padding: 2px 5px; border-radius: 4px; }
 .flash-pill {
   flex: none; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 999px;
   background: #fff1e6; color: #c2410c; font-weight: 700; font-size: 13px;
@@ -917,6 +921,7 @@ main { padding-bottom: 40px; }
   <symbol id="i-headphones" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4.5" height="7" rx="1.6"/><rect x="16.5" y="14" width="4.5" height="7" rx="1.6"/></symbol>
   <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.4"/></symbol>
   <symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3.5" y="9" width="17" height="12" rx="1.5"/><path d="M2.5 9h19M12 9v12M12 9C9 9 7 7.8 7 6.2S8.8 3.5 12 9c3.2-5.5 5-4.4 5-2.8S15 9 12 9Z"/></symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 5 5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></symbol>
   <symbol id="i-sparkle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7Z"/><path d="M19 14c.3 2.2 1.1 3 3.3 3.3-2.2.3-3 1.1-3.3 3.3-.3-2.2-1.1-3-3.3-3.3 2.2-.3 3-1.1 3.3-3.3Z" opacity=".6"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></symbol>
@@ -1332,7 +1337,7 @@ const DEPTS = [
   { key: 'men', label: 'Men', icon: 'man', sub: 'Everything for him, in one place', items: [
     ['Watches', 1], ['Bags', 14], ['Wallets', 22], ['Belts', 24], ['Sunglasses', 32], ['Fragrances', 25], ['Caps', 13], ['Slippers', 16]], promo: [14, 'Bags from 1,650 EGP', 'Tommy Hilfiger & BOSS'] },
   { key: 'women', label: 'Women', icon: 'woman', sub: 'Watches, bags, scents & accessories', items: [
-    ['Watches', 10], ['Bags', 18], ['Wallets', 20], ['Sunglasses', 31], ['Fragrances', 29], ['Accessories', 19], ['Smart watches', 41], ['Gift sets', 11]], promo: [18, 'Coach & Pinko', 'Up to 30% off handbags'] },
+    ['Watches', 10], ['Bags', 18], ['Wallets', 20], ['Sunglasses', 31], ['Fragrances', 29], ['Accessories', 19], ['Smart watches', 41], ['Satin', '2026/03/Untitled-design-2026-03-30T153054.357.jpg']], promo: [18, 'Coach & Pinko', 'Up to 30% off handbags'] },
   { key: 'bags', label: 'Bags', icon: 'bag', sub: 'Crossbody, handbags, backpacks & wallets', items: [
     ['Crossbody bags', 14], ['Handbags', 16], ['Shoulder bags', 18], ['Women bags', 19], ['Men bags', 13], ['Wallets', 22], ['Belts', 24], ['Card holders', 43]], promo: [13, 'New: BOSS Multi-Zip', 'Just landed'] },
   { key: 'perfumes', label: 'Fragrances', icon: 'perfume', sub: '100% original perfumes', items: [
@@ -1341,8 +1346,8 @@ const DEPTS = [
     ['Men sunglasses', 32], ['Women sunglasses', 31], ['Aviator', 33], ['Square', 31]], promo: [32, 'Sunglasses 2,450 EGP', 'Tommy & BOSS'] },
   { key: 'electronics', label: 'Electronics', icon: 'headphones', isNew: true, sub: 'Audio, smart watches, charging & accessories', items: [
     ['Headphones', 34], ['Earbuds', 35], ['Earphones', 36], ['Smart watches', 42], ['Chargers & cables', 37], ['Car & bike holders', 39], ['MagSafe', 43], ['Screen protectors', 45]], promo: [34, 'Noise cancelling', 'JR-JH1 from 1,950 EGP'] },
-  { key: 'gifts', label: 'Gift sets', icon: 'gift', sub: 'Ready-to-gift bundles', items: [
-    ['Wallet & belt sets', 23], ['Watch + sunglasses', 3], ['For him', 22], ['For her', 11]], promo: [23, 'Gift sets', 'From 1,590 EGP'] },
+  { key: 'sale', label: 'On sale', icon: 'percent', isSale: true, sub: 'Every discounted product, by department', items: [
+    ['Watches', 4], ['Bags', 14], ['Fragrances', 29], ['Eyewear', 32], ['Electronics', 37], ['Wallets & belts', 22], ['Up to 50% off', 36], ['Under 500 EGP', 39]], promo: [37, 'Up to 50% off', 'Chargers & cables'] },
   { key: 'brands', label: 'Brands', icon: 'tag', sub: 'Shop 30+ international brands', items: [], promo: [1, 'Tommy Hilfiger Week', 'Up to 40% off'] },
   { key: 'new', label: 'New arrivals', icon: 'sparkle', sub: 'Fresh in this week', items: [
     ['All new', 13], ['Watches', 8], ['Electronics', 34], ['Fragrances', 28]], promo: [8, 'Just Cavalli', 'New season'] },
@@ -1430,8 +1435,8 @@ function chipRail(chipsEl, railEl, options, variant) {
 
 /* ---------------- Header: nav tabs + mega menu ---------------- */
 function renderNav() {
-  $('#tabs').innerHTML = DEPTS.map(d => `<a href="#" class="tab ${d.isNew ? 'new' : ''}" data-dept="${d.key}">${ico(d.icon)}${d.label}</a>`).join('');
-  $('#megaDepts').innerHTML = DEPTS.map(d => `<button data-dept="${d.key}">${ico(d.icon)}${d.label}${ico('chev-r', 'ico chev')}</button>`).join('');
+  $('#tabs').innerHTML = DEPTS.map(d => `<a href="#" class="tab ${d.isNew ? 'new' : ''} ${d.isSale ? 'sale' : ''}" data-dept="${d.key}">${ico(d.icon)}${d.label}</a>`).join('');
+  $('#megaDepts').innerHTML = DEPTS.map(d => `<button data-dept="${d.key}">${ico(d.icon)}${d.label}${d.isSale ? '<span class="sale-pill">SALE</span>' : ''}${ico('chev-r', 'ico chev')}</button>`).join('');
 }
 function showDept(key) {
   const d = DEPTS.find(x => x.key === key) || DEPTS[0];
@@ -1439,7 +1444,7 @@ function showDept(key) {
   $$('#tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.dept === d.key && mega.classList.contains('open')));
   const grid = d.key === 'brands'
     ? `<div class="mega-grid mega-grid--brands">${BRANDS.map(b => `<a href="#"><span class="mi mlogo">${logo(b)}</span>${b}</a>`).join('')}</div>`
-    : `<div class="mega-grid">${d.items.map(([l, id]) => `<a href="#"><span class="mi"><img src="${byId[id].img}" alt=""></span>${l}</a>`).join('')}</div>`;
+    : `<div class="mega-grid">${d.items.map(([l, ref]) => `<a href="#"><span class="mi"><img src="${typeof ref === 'string' ? U + ref : byId[ref].img}" alt=""></span>${l}</a>`).join('')}</div>`;
   $('#megaBody').innerHTML = `<h4>${d.label}</h4><p class="sub">${d.sub}</p>${grid}
     ${d.key === 'brands' ? '' : `<div class="mega-brands"><span>Popular brands</span>${(d.key === 'electronics' ? ['Joyroom'] : BRANDS.slice(0, 7)).map(b => `<a href="#">${b}</a>`).join('')}</div>`}`;
   const [pid, h, s] = d.promo;
