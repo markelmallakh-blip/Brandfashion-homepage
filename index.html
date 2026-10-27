@@ -613,6 +613,11 @@ main { padding-bottom: 40px; }
 .brands a:hover .bword { color: #e60012; }
 .brands a:hover small { opacity: 1; transform: none; height: auto; }
 .mega-grid a .mlogo { background: #fff; border: 1px solid var(--line); padding: 10px; }
+/* all 16 brands fit without the popular-brands row: wider, shorter logo tiles */
+.mega-grid--brands { gap: 8px 14px; }
+.mega-grid--brands a { padding: 8px; gap: 6px; font-size: 12.5px; }
+.mega-grid--brands a .mi { width: 100%; height: 52px; border-radius: 14px; }
+.mega-grid a .mi.mlogo img.blogo { width: auto; height: auto; aspect-ratio: auto; max-width: 78%; max-height: 26px; mix-blend-mode: normal; }
 .mega-grid a .mlogo .blogo { max-width: 100%; max-height: 28px; width: auto; height: auto; mix-blend-mode: normal; }
 .mega-grid a .mlogo .bword { font-size: 10px; }
 
@@ -1433,10 +1438,10 @@ function showDept(key) {
   $$('#megaDepts button').forEach(b => b.classList.toggle('on', b.dataset.dept === d.key));
   $$('#tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.dept === d.key && mega.classList.contains('open')));
   const grid = d.key === 'brands'
-    ? `<div class="mega-grid">${BRANDS.slice(0, 12).map(b => `<a href="#"><span class="mi mlogo">${logo(b)}</span>${b}</a>`).join('')}</div>`
+    ? `<div class="mega-grid mega-grid--brands">${BRANDS.map(b => `<a href="#"><span class="mi mlogo">${logo(b)}</span>${b}</a>`).join('')}</div>`
     : `<div class="mega-grid">${d.items.map(([l, id]) => `<a href="#"><span class="mi"><img src="${byId[id].img}" alt=""></span>${l}</a>`).join('')}</div>`;
   $('#megaBody').innerHTML = `<h4>${d.label}</h4><p class="sub">${d.sub}</p>${grid}
-    <div class="mega-brands"><span>Popular brands</span>${(d.key === 'electronics' ? ['Joyroom'] : BRANDS.slice(0, 7)).map(b => `<a href="#">${b}</a>`).join('')}</div>`;
+    ${d.key === 'brands' ? '' : `<div class="mega-brands"><span>Popular brands</span>${(d.key === 'electronics' ? ['Joyroom'] : BRANDS.slice(0, 7)).map(b => `<a href="#">${b}</a>`).join('')}</div>`}`;
   const [pid, h, s] = d.promo;
   $('#megaPromo').innerHTML = `<a href="#" class="card"><small>FEATURED</small><h5>${h}</h5><p>${s}</p><div class="mdisc"><img src="${byId[pid].img}" alt=""></div></a>`;
 }
